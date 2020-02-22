@@ -1,0 +1,24 @@
+{
+  "contests": [
+    {
+      "id": 1,
+      "categoryName": "Bu",
+      "contestName": "Co"
+    },
+    {
+      "id": 2,
+      "categoryName": "Ma",
+      "contestName": "Ed"
+    },
+    {
+      "id": 3,
+      "categoryName": "So",
+      "contestName": "Bi"
+    },
+    {
+      "id":4,
+      "categoryName": "We",
+      "contestName": "Fr"
+    }
+  ]
+}
