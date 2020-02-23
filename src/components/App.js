@@ -2,6 +2,10 @@ import React from 'react';
 import Header from './Header';
 import ContestList from './ContestList';
 
+const pushState = (obj, url) => {
+  window.history.pushState(obj, '', url);
+};
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -15,11 +19,16 @@ class App extends React.Component {
   componentWillUnmount() {
     console.log('will unmount');
   }
+  fetchContest = (contestId) => {
+    pushState({currContestId: contestId}, `/contest/${contestId}`)
+  }
   render() {
     return (
       <>
         <Header message={this.state.pageHeader} />
-        <ContestList contests={ this.state.contests } />
+        <ContestList
+          onContestClick={this.fetchContest}
+          contests={ this.state.contests } />
       </>
     );
   }
