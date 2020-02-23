@@ -1,25 +1,26 @@
 import React from 'react';
 import Header from './Header';
-import ContestPreview from './ContestPreview';
+import ContestList from './ContestList';
 
 class App extends React.Component {
-  state = { pageHeader: 'Naming Contests' };
+  constructor(props) {
+    super(props);
+    this.state = {
+      pageHeader: 'Naming Contests',
+      contests: this.props.initialContests
+    };
+  }
   componentDidMount() {
-    console.log('did mount');
   }
   componentWillUnmount() {
     console.log('will unmount');
   }
   render() {
     return (
-      <div className='App'>
+      <>
         <Header message={this.state.pageHeader} />
-        <div>
-          {this.props.contests.map((contest) => {
-            return <ContestPreview {...contest} key={contest.id} />;
-          })}
-        </div>
-      </div>
+        <ContestList contests={ this.state.contests } />
+      </>
     );
   }
 }

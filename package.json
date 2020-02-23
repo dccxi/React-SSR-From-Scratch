@@ -8,6 +8,7 @@
     "dev": "webpack -wd"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "mongodb": "^3.5.3",
