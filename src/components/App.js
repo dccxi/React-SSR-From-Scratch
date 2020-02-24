@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from './Header';
 import ContestList from './ContestList';
 import Contest from './Contest';
@@ -9,14 +10,13 @@ const pushState = (obj, url) => {
 };
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      pageHeader: 'Naming Contests',
-      contests: this.props.initialContests
-    };
+  static propTypes = {
+    initialData: PropTypes.object.isRequired,
+  };
+  state = this.props.initialData;
+  componentDidMount() {
+
   }
-  componentDidMount() {}
   componentWillUnmount() {
     console.log('will unmount');
   }
@@ -24,7 +24,6 @@ class App extends React.Component {
     pushState({ currContestId: contestId }, `/contest/${contestId}`);
     api.fetchContest(contestId).then(contest => {
       this.setState({
-        pageHeader: contest.contestName,
         currentContestId: contest.id,
         contests: {
           ...this.state.contests,
@@ -33,9 +32,32 @@ class App extends React.Component {
       });
     });
   };
-  currentContent = () => {
+  fetchContestList = () => {
+    pushState({ currContestId: null }, '/');
+    api.fetchContestList().then(contests => {
+      this.setState({
+        currentContestId: null,
+        contests
+      });
+    });
+  };
+  currentContest() {
+    return this.state.contests[this.state.currentContestId];
+  }
+  pageHeader() {
     if (this.state.currentContestId) {
-      return <Contest {...this.state.contests[this.state.currentContestId]} />;
+      return this.currentContest().contestName;
+    }
+    return 'Naming Contests';
+  }
+  currentContent() {
+    if (this.state.currentContestId) {
+      return (
+        <Contest
+          contestListClick={this.fetchContestList}
+          {...this.currentContest()}
+        />
+      );
     }
     return (
       <ContestList
@@ -47,7 +69,7 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Header message={this.state.pageHeader} />
+        <Header message={ this.pageHeader() } />
         {this.currentContent()}
       </>
     );
