@@ -9,16 +9,24 @@ const pushState = (obj, url) => {
   window.history.pushState(obj, '', url);
 };
 
+const setPopStateHandler = handler => {
+  window.onpopstate = handler;
+}
+
 class App extends React.Component {
   static propTypes = {
     initialData: PropTypes.object.isRequired,
   };
   state = this.props.initialData;
   componentDidMount() {
-
+    setPopStateHandler(e => {
+      this.setState({
+        currentContestId: (e.state || {}).currContestId
+       })
+    });
   }
   componentWillUnmount() {
-    console.log('will unmount');
+    setPopStateHandler(null);
   }
   fetchContest = contestId => {
     pushState({ currContestId: contestId }, `/contest/${contestId}`);
