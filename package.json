@@ -8,7 +8,7 @@
     "dev": "webpack -wd"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "prop-types": "^15.7.2",
